@@ -24,18 +24,17 @@ class TableViewController: UITableViewController {
   
   private func observe() {
     $cart.dropFirst().sink { [unowned self] dict in
-      var counter = 0
       dict.forEach { k,v in
         print("\(k.name) - \(v)")
-        counter += v
       }
       print("=======")
       tableView.reloadData()
     }.store(in: &cancellables)
     
-    $likes.dropFirst().sink { dict in
+    $likes.dropFirst().sink { [unowned self] dict in
       let products = dict.filter({ $0.value == true }).map({ $0.key.name })
       print("❤️ \(products)")
+      tableView.reloadData()
     }.store(in: &cancellables)
   }
         
@@ -49,7 +48,6 @@ class TableViewController: UITableViewController {
       } else {
         likes[product] = true
       }
-      tableView.reloadRows(at: [indexPath], with: .none)
     }
   }
   

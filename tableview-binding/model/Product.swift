@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Product: Hashable, Codable {
+struct Product: Hashable {
   let name: String
   let imageName: String
   let price: Int
